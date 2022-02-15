@@ -9,9 +9,19 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	private static Stage primaryStage; // **Declare static Stage**
+
+    private void setPrimaryStage(Stage stage) {
+        Main.primaryStage = stage;
+    }
+
+    static public Stage getPrimaryStage() {
+        return Main.primaryStage;
+    }
 	@Override
 	public void start(Stage primaryStage) {
-		try {
+		try { 
+			setPrimaryStage(primaryStage);
 			BorderPane root=(BorderPane) FXMLLoader.load(getClass().getResource("/application/mainPage.fxml"));;
 			Scene scene = new Scene(root,600,600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
