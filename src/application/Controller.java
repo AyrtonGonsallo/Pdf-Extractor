@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 public class Controller implements Initializable{
 	private int id=1;
 	private PdfReader pdfReader=new PdfReader();
+	private XlsxWriter writer=new XlsxWriter();
 	private boolean isImport=false;
 	@FXML 
 	private ChoiceBox<String> format;
@@ -32,7 +33,7 @@ public class Controller implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		format.getItems().add("xml");
+		format.getItems().add("xlsx");
 		format.getItems().add("csv");
 		
 	}
@@ -40,17 +41,16 @@ public class Controller implements Initializable{
 	public void exportation(){
 		String value=format.getValue();
 		if(value!=null && isImport==true){
-			Text text_1 = new Text("document pdf nº"+(id-1)+" exporté en "+value+"\n");
+			Text text_1 = new Text("Document pdf nº"+(id-1)+" exporté en "+value+"\n");
 			text_1.setFill(Color.GREEN);
 			text_1.setFont(Font.font("Verdana", 25));
 			texte.getChildren().add(text_1);
 			isImport=false;
-			String res=pdfReader.getResults();
-			pdfReader.setFile(null);
-			Text text_2 = new Text("Résultats: \n"+res+"\n");
-			text_2.setFill(Color.RED);
-			text_2.setFont(Font.font("Verdana", 25));
-			texte.getChildren().add(text_2);
+			
+			writer.createXlsxFile();
+			writer.setTexte(null);
+			
+			
 		}
 		
 	}
@@ -60,19 +60,41 @@ public class Controller implements Initializable{
 		format.setValue(null);
 	}
 	public void importation(){
-		
 		FileChooser fc=new FileChooser();
 		fc.getExtensionFilters().addAll(new ExtensionFilter("PDF file","*pdf"));
 		File file=fc.showOpenDialog(Main.getPrimaryStage());
 		if(file!=null){
-			Text text = new Text("document pdf nº"+id+" importé\n");
-		text.setFill(Color.BLUE);
-		text.setFont(Font.font("Verdana", 25));
-		texte.getChildren().add(text);
-		pdfReader.setFile(file);
-		id++;
-		isImport=true;
+			Text text = new Text("Document pdf nº"+id+" importé\n");
+			text.setFill(Color.BLUE);
+			text.setFont(Font.font("Verdana", 25));
+			texte.getChildren().add(text);
+			Text text2 = new Text("Titre: "+file.getName()+"\n");
+			text2.setFill(Color.RED);
+			text2.setFont(Font.font("Verdana", 20));
+			texte.getChildren().add(text2);
+			pdfReader.setFile(file);
+			id++;
+			isImport=true;
+			Text text_3 = new Text("Traitement:\n");
+			text_3.setFill(Color.ORANGE);
+			text_3.setFont(Font.font("Verdana", 16));
+			texte.getChildren().add(text_3);
+			String res;
+			Text text_2; 
+			try {
+				res = pdfReader.getResults();
+				text_2 = new Text(res+"\n");
+				text_2.setFill(Color.BLACK);
+				text_2.setFont(Font.font("Verdana", 10));
+				texte.getChildren().add(text_2);
+				writer.setTexte(res);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pdfReader.setFile(null);
 		}
+		
 		
 		
 	}
