@@ -18,6 +18,7 @@ public class Controller implements Initializable{
 	private int id=1;
 	private PdfReader pdfReader=new PdfReader();
 	private XlsxWriter writer=new XlsxWriter();
+	private CsvWriter csvWriter=new CsvWriter();
 	private boolean isImport=false;
 	@FXML 
 	private ChoiceBox<String> format;
@@ -45,13 +46,19 @@ public class Controller implements Initializable{
 			text_1.setFill(Color.GREEN);
 			text_1.setFont(Font.font("Verdana", 25));
 			texte.getChildren().add(text_1);
-			isImport=false;
 			
-			writer.createXlsxFile();
-			writer.setTexte(null);
-			
-			
+			if(value.equalsIgnoreCase("xlsx") && isImport==true){
+				writer.createXlsxFile();
+				writer.setTexte(null);
+				isImport=false;
+			}
+			else if(value.equalsIgnoreCase("csv") && isImport==true){
+				csvWriter.createCsvFile();
+				csvWriter.setTexte(null);
+				isImport=false;
+			}
 		}
+		
 		
 	}
 	public void effacement(){
@@ -83,11 +90,13 @@ public class Controller implements Initializable{
 			Text text_2; 
 			try {
 				res = pdfReader.getResults();
+				csvWriter.setTexte(res);
+				writer.setTexte(res);
 				text_2 = new Text(res+"\n");
 				text_2.setFill(Color.BLACK);
 				text_2.setFont(Font.font("Verdana", 10));
 				texte.getChildren().add(text_2);
-				writer.setTexte(res);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
