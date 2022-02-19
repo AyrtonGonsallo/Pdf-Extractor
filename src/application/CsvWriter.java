@@ -4,7 +4,7 @@ package application;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
+
 
 import com.opencsv.CSVWriter;
 
@@ -14,41 +14,73 @@ import javafx.scene.control.Alert.AlertType;
 public class CsvWriter {
 
 	private String texte;
+	private String sexe;
+	private String typeFichier;
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+	public void setTypeFichier(String typeFichier) {
+		this.typeFichier = typeFichier;
+	}
 	public void setTexte(String texte) {
 		this.texte = texte;
 	}
 	public void createCsvFile(){
-		File file = new File("Resultats.csv");
-		// create FileWriter object with file as parameter
-        FileWriter outputfile;
-		try {
-			outputfile = new FileWriter(file);
-			
-		// create CSVWriter object filewriter object as parameter
-        CSVWriter writer = new CSVWriter(outputfile,CSVWriter.DEFAULT_SEPARATOR,CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.DEFAULT_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
-  
-        // adding header to csv
-        String[] header = { "Id", "Pays", "Nom et Prenom" };
-        writer.writeNext(header, false);
-        String [] champions=this.texte.split("\n");
-		String [] elements;
-		for(int i=1;i<=champions.length;i++){
-			elements=champions[i-1].split(" ");
-			String[] data = { String.valueOf(i), elements[0], elements[1]+" "+elements[2]};
-	        writer.writeNext(data);
+		if(this.typeFichier.equalsIgnoreCase("fédération francaise")){
+			File file = new File("Resultats_Fed_Fra.csv");
+			FileWriter outputfile;
+			try {
+				outputfile = new FileWriter(file);
+				CSVWriter writer = new CSVWriter(outputfile,CSVWriter.DEFAULT_SEPARATOR,CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.DEFAULT_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+		        String[] header = { "Nom", "Sexe : MF", "abreviation pays","rang","categorie de poids","club (facultatif)" };
+		        writer.writeNext(header);
+				String [] resultatsPage=this.texte.split("\n---\n");
+				
+				for(int ip=0;ip<resultatsPage.length;ip++){
+					String [] champions=resultatsPage[ip].split("\n");
+					for(int ic=2;ic<champions.length;ic++){
+						String []elements=champions[ic].split("   ");
+						if(elements.length>1){
+							String[] data = { elements[1],this.sexe,"FRA",elements[0],champions[1].replace("kg", ""),elements[2]};
+					        writer.writeNext(data);
+							
+						}
+					}
+				}
+			writer.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}	
+		}else if(this.typeFichier.equalsIgnoreCase("fédération internationale")){
+			File file = new File("Resultats_Fed_Int.csv");
+			FileWriter outputfile;
+			try {
+				outputfile = new FileWriter(file);
+				CSVWriter writer = new CSVWriter(outputfile,CSVWriter.DEFAULT_SEPARATOR,CSVWriter.NO_QUOTE_CHARACTER,CSVWriter.DEFAULT_ESCAPE_CHARACTER,CSVWriter.DEFAULT_LINE_END);
+		        String[] header = { "Nom", "Sexe : MF", "abreviation pays","rang","categorie de poids" };
+		        writer.writeNext(header);
+				String [] resultatsPage=this.texte.split("\n---\n");
+				
+				for(int ip=0;ip<resultatsPage.length;ip++){
+					String [] champions=resultatsPage[ip].split("\n");
+					for(int ic=2;ic<champions.length;ic++){
+						String []elements=champions[ic].split("   ");
+						if(elements.length>1){
+							String[] data = { elements[1],this.sexe,elements[2],elements[0],champions[1].replace("kg", "")};
+					        writer.writeNext(data);
+							
+						}
+					}
+				}
+				writer.close();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
-		// closing writer connection
-        writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-  
-       
 		Alert alert=new Alert(AlertType.INFORMATION);
 		alert.setTitle("INFOS");
 		alert.setHeaderText("Fichier crée");
-		alert.setContentText("un fichier xlsx a bien éte crée");
+		alert.setContentText("un fichier csv a bien éte crée");
 		alert.showAndWait();
 		
 	}

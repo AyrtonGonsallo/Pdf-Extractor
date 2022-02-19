@@ -25,7 +25,16 @@
             <Label text="Format de sortie" />
             <ChoiceBox fx:id="format" prefWidth="150.0" />
          </children>
+         <children>
+            <Label text="Type de fichier" />
+            <ChoiceBox fx:id="typeFichier" prefWidth="150.0" />
+         </children>
+         <children>
+            <Label text="Sexe" />
+            <ChoiceBox fx:id="sexe" prefWidth="150.0" />
+         </children>
       </VBox>
+      
    </right>
    <center>
       <ScrollPane prefHeight="750.0" prefWidth="1400.0" style="-fx-border-style: solid;" BorderPane.alignment="CENTER">
