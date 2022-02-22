@@ -40,7 +40,7 @@ public class CsvWriter {
 					String [] champions=resultatsPage[ip].split("\n");
 					for(int ic=2;ic<champions.length;ic++){
 						String []elements=champions[ic].split("   ");
-						if(elements.length>1){
+						if(elements.length==3){
 							String[] data = { elements[1],this.sexe,"FRA",elements[0],champions[1].replace("kg", ""),elements[2]};
 					        writer.writeNext(data);
 							
@@ -48,6 +48,7 @@ public class CsvWriter {
 					}
 				}
 			writer.close();
+			System.out.println("ecrit");
 			}catch (Exception e) {
 				// TODO: handle exception
 			}	
@@ -65,7 +66,7 @@ public class CsvWriter {
 					String [] champions=resultatsPage[ip].split("\n");
 					for(int ic=2;ic<champions.length;ic++){
 						String []elements=champions[ic].split("   ");
-						if(elements.length>1){
+						if(elements.length==3){
 							String[] data = { elements[1],this.sexe,elements[2],elements[0],champions[1].replace("kg", "")};
 					        writer.writeNext(data);
 							
@@ -73,6 +74,7 @@ public class CsvWriter {
 					}
 				}
 				writer.close();
+				System.out.println("ecrit");
 			}catch (Exception e) {
 				// TODO: handle exception
 			}

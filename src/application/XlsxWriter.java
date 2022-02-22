@@ -39,7 +39,7 @@ public class XlsxWriter {
 				String [] champions=resultatsPage[ip].split("\n");
 				for(int ic=2;ic<champions.length;ic++){
 					String []elements=champions[ic].split("   ");
-					if(elements.length>1){
+					if(elements.length==3){
 						XSSFRow ligne=sheet.createRow(page);
 						ligne.createCell(0).setCellValue(elements[1]);
 						ligne.createCell(1).setCellValue(this.sexe);
@@ -59,6 +59,7 @@ public class XlsxWriter {
 				workbook.write(fos);
 				workbook.close();
 				fos.close();
+				System.out.println("ecrit");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -78,7 +79,7 @@ public class XlsxWriter {
 				String [] champions=resultatsPage[ip].split("\n");
 				for(int ic=2;ic<champions.length;ic++){
 					String []elements=champions[ic].split("   ");
-					if(elements.length>1){
+					if(elements.length==3){
 						XSSFRow ligne=sheet.createRow(page);
 						ligne.createCell(0).setCellValue(elements[1]);
 						ligne.createCell(1).setCellValue(this.sexe);
@@ -96,6 +97,7 @@ public class XlsxWriter {
 				FileOutputStream fos=new FileOutputStream("Resultats_Fed_Int.xlsx");
 				workbook.write(fos);
 				workbook.close();
+				System.out.println("ecrit");
 				fos.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
