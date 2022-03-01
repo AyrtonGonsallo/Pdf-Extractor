@@ -40,12 +40,16 @@ public class XlsxWriter {
 				for(int ic=2;ic<champions.length;ic++){
 					String []elements=champions[ic].split("   ");
 					if(elements.length==3){
+						champions[1]=champions[1].replace("kg", "");
+						champions[1]=champions[1].replace("(", "");
+						champions[1]=champions[1].replace(")", "");
+						champions[1]=champions[1].replaceAll("\\s{1,}","");
 						XSSFRow ligne=sheet.createRow(page);
-						ligne.createCell(0).setCellValue(elements[1]);
+						ligne.createCell(0).setCellValue(elements[1].replaceAll("\\s{1,}",""));
 						ligne.createCell(1).setCellValue(this.sexe);
 						ligne.createCell(2).setCellValue("FRA");
 						ligne.createCell(3).setCellValue(elements[0]);
-						ligne.createCell(4).setCellValue(champions[1].replace("kg", ""));
+						ligne.createCell(4).setCellValue(champions[1]);
 						ligne.createCell(5).setCellValue(elements[2]);
 						page++;
 					}
@@ -81,7 +85,11 @@ public class XlsxWriter {
 					String []elements=champions[ic].split("   ");
 					if(elements.length==3){
 						XSSFRow ligne=sheet.createRow(page);
-						ligne.createCell(0).setCellValue(elements[1]);
+						champions[1]=champions[1].replace("kg", "");
+						champions[1]=champions[1].replace("(", "");
+						champions[1]=champions[1].replace(")", "");
+						champions[1]=champions[1].replaceAll("\\s{1,}","");
+						ligne.createCell(0).setCellValue(elements[1].replaceAll("\\s{1,}",""));
 						ligne.createCell(1).setCellValue(this.sexe);
 						ligne.createCell(2).setCellValue(elements[2]);
 						ligne.createCell(3).setCellValue(elements[0]);
