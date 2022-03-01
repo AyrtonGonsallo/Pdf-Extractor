@@ -49,6 +49,9 @@ public class XlsxWriter {
 						ligne.createCell(1).setCellValue(this.sexe);
 						ligne.createCell(2).setCellValue("FRA");
 						ligne.createCell(3).setCellValue(elements[0]);
+						if(champions[1].startsWith("+")==false && champions[1].startsWith("-")==false){
+							champions[1]="-"+champions[1];
+						}
 						ligne.createCell(4).setCellValue(champions[1]);
 						ligne.createCell(5).setCellValue(elements[2]);
 						page++;
@@ -93,7 +96,10 @@ public class XlsxWriter {
 						ligne.createCell(1).setCellValue(this.sexe);
 						ligne.createCell(2).setCellValue(elements[2]);
 						ligne.createCell(3).setCellValue(elements[0]);
-						ligne.createCell(4).setCellValue(champions[1].replace("kg", ""));
+						if(champions[1].startsWith("+")==false  && champions[1].startsWith("-")==false){
+							champions[1]="-"+champions[1];
+						}
+						ligne.createCell(4).setCellValue(champions[1]);
 						page++;
 					}
 					

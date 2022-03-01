@@ -115,8 +115,8 @@ public class PdfReader {
 					}
 					pretexte=String.join("\n",res);
 					pretexte=pretexte.replaceAll("\\s{2,}","\n");
-					System.out.println("avant");
-					System.out.println(pretexte);
+					//System.out.println("avant");
+					//System.out.println(pretexte);
 					for(int irep=0;irep<5;irep++){
 						tab=pretexte.split("\n");
 						for(int j=0;j<tab.length;j++){
@@ -133,8 +133,8 @@ public class PdfReader {
 					
 					pretexte=String.join("\n",tab);
 					pretexte=pretexte.replaceAll("\\s{2,}","\n");
-					System.out.println("resutats");
-					System.out.println(pretexte);
+					//System.out.println("resutats");
+					//System.out.println(pretexte);
 					tab=pretexte.split("\n");
 					for(int j=0;j<tab.length;j++){
 						String []mots=tab[j].split(" ");
@@ -210,7 +210,7 @@ public class PdfReader {
 				texte="";
 			}
 			catch (Exception e) {
-				System.out.println("erreur page nº"+(i+1));
+				//System.out.println("erreur page nº"+(i+1));
 				
 				texte="";
 			}
